@@ -14,14 +14,18 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         cardTheme: const CardTheme(
           color: Color(0xFFEDECF2),
-
         ),
         textTheme: const TextTheme(
-          titleLarge:
-              TextStyle(color: Color(0xFF4C53A5), fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(
+            color: Color(0xFF4C53A5),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         badgeTheme: const BadgeThemeData(backgroundColor: Colors.red),
-        iconTheme: const IconThemeData(color: Color(0xFF4C53A5),size: 30 ,),
+        iconTheme: const IconThemeData(
+          color: Color(0xFF4C53A5),
+          size: 30,
+        ),
       ),
       home: const TabScreen(),
     );

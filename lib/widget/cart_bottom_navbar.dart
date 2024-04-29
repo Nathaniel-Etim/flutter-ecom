@@ -19,11 +19,9 @@ class _CartBottomNavBarState extends State<CartBottomNavBar> {
   Widget build(BuildContext context) {
     int totalPrice = 0;
 
-
-
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      height: 130,
+      // height: 130,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

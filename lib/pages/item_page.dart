@@ -1,14 +1,16 @@
 import 'package:clippy_flutter/arc.dart';
+import 'package:ecom/GetxProvider/api_controller.dart';
+import 'package:ecom/Models/product_response.dart';
 import 'package:ecom/widget/item_bottom_navbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:ecom/GetxProvider/api_controller.dart';
-
 
 class ItemPage extends StatefulWidget {
-  const ItemPage({super.key});
+  const ItemPage({super.key, required this.selectedItem});
+
+  final ProductResponse selectedItem;
 
   @override
   State<ItemPage> createState() => _ItemPageState();
@@ -27,13 +29,14 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    var item = widget.selectedItem;
     return Scaffold(
       backgroundColor: const Color(0xFFEDECF2),
       body: Column(children: [
-        //  item appbar
+        // appbar
         Container(
           color: Colors.white,
-          padding: const EdgeInsets.all(25),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           child: Row(
             children: [
               InkWell(
@@ -46,16 +49,16 @@ class _ItemPageState extends State<ItemPage> {
               ),
               Container(
                 width: 260,
-                padding:const EdgeInsets.only(left: 20),
+                padding: const EdgeInsets.only(left: 20),
                 child: Text(
-                  "jonas",
+                  item.title ?? '',
                   textWidthBasis: TextWidthBasis.parent,
-                  maxLines: 2, // Maximum number of lines
-                  overflow: TextOverflow.fade,
+                  maxLines: 1, // Maximum number of lines
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).textTheme.titleLarge!.color,
                     fontWeight: FontWeight.bold,
-                    fontSize: 23,
+                    fontSize: 20,
                   ),
                 ),
               ),
@@ -74,7 +77,7 @@ class _ItemPageState extends State<ItemPage> {
             Padding(
               padding: const EdgeInsets.all(16),
               child: Image.network(
-                "images/1.png",
+                item.image ?? '',
                 height: 300,
               ),
             ),
@@ -86,31 +89,47 @@ class _ItemPageState extends State<ItemPage> {
                 width: double.infinity,
                 color: Colors.white,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(children: [
                     Container(
                       padding: const EdgeInsets.only(top: 30, bottom: 15),
                       child: Row(children: [
-                        Container(
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        SizedBox(
                           width: 300, // Width constraint
-                          // height: 120,
                           child: Text(
-                            "samisit",
-                            maxLines: 2, // Maximum number of lines
+                            item.title ?? '',
+                            maxLines: 1, // Maximum number of lines
                             textWidthBasis: TextWidthBasis.parent,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 28,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color:
                                   Theme.of(context).textTheme.titleLarge!.color,
                             ),
                           ),
-                        )
+                        ),
+                        const Spacer(),
+                        Text(
+                          '\$${item.price.toString()}',
+                          // Include the dollar sign before the price variable
+                          maxLines: 1, // Maximum number of lines
+                          textWidthBasis: TextWidthBasis.parent,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).textTheme.titleLarge!.color,
+                          ),
+                        ),
                       ]),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 5, bottom: 10),
+                      padding: const EdgeInsets.only(top: 5, bottom: 10),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -125,74 +144,80 @@ class _ItemPageState extends State<ItemPage> {
                             direction: Axis.horizontal,
                             itemCount: 5,
                             itemSize: 20,
-                            itemPadding: EdgeInsets.symmetric(horizontal: 4),
+                            itemPadding: const EdgeInsets.symmetric(
+                              horizontal: 4,
+                            ),
                           ),
-                          Row(children: [
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      blurStyle: BlurStyle.solid,
-                                      blurRadius: 10,
-                                      spreadRadius: 3,
-                                      offset: Offset(0,3),
-                                    )
-                                  ]),
-                              child: const Icon(
-                                CupertinoIcons.plus,
-                                size: 18,
-                              ),
-                            ),
-                            Container(
-                              margin:const EdgeInsets.symmetric(horizontal: 10),
-                              child: Text(
-                                "01",
-                                style: TextStyle(
-                                  color: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .color,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          blurStyle: BlurStyle.solid,
+                                          blurRadius: 10,
+                                          spreadRadius: 3,
+                                          offset: const Offset(0, 3),
+                                        )
+                                      ]),
+                                  child: const Icon(
+                                    CupertinoIcons.plus,
+                                    size: 18,
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      blurStyle: BlurStyle.solid,
-                                      blurRadius: 10,
-                                      spreadRadius: 3,
-                                      offset: Offset(0, 3),
-                                    )
-                                  ]),
-                              child:const Icon(
-                                CupertinoIcons.minus,
-                                size: 18,
-                              ),
-                            )
-                          ])
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "01",
+                                    style: TextStyle(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .color,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          blurStyle: BlurStyle.solid,
+                                          blurRadius: 10,
+                                          spreadRadius: 3,
+                                          offset: const Offset(0, 3),
+                                        )
+                                      ]),
+                                  child: const Icon(
+                                    CupertinoIcons.minus,
+                                    size: 18,
+                                  ),
+                                )
+                              ])
                         ],
                       ),
                     ),
                     Container(
-                      padding:const EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         vertical: 12,
                       ),
                       // height: 110,
                       child: Text(
-                        "lorem jonas sample of the description ",
-                        maxLines: 2, // Maximum number of lines
-                        overflow: TextOverflow.fade,
+                        item.description ?? '',
+                        maxLines: 3, // Maximum number of lines
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 17,
                           color: Theme.of(context).textTheme.titleLarge!.color,
@@ -223,7 +248,8 @@ class _ItemPageState extends State<ItemPage> {
                                 height: 30,
                                 width: 30,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(30),
@@ -252,7 +278,7 @@ class _ItemPageState extends State<ItemPage> {
                     ),
                     // colors
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Row(children: [
                         Text(
                           "Color:",
@@ -273,7 +299,8 @@ class _ItemPageState extends State<ItemPage> {
                                 height: 30,
                                 width: 30,
                                 alignment: Alignment.center,
-                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 decoration: BoxDecoration(
                                   color: colrs[i],
                                   borderRadius: BorderRadius.circular(30),

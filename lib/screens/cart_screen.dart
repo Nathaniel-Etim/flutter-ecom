@@ -6,36 +6,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  const CartScreen({Key? key}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  ScreenNavigationProvider BackBtn = Get.put(
-    ScreenNavigationProvider(),
-  );
-
-  FetchedData cartItem = Get.put(FetchedData());
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    ScreenNavigationProvider backBtn = Get.put(ScreenNavigationProvider());
+    FetchedData cartItem = Get.put(FetchedData());
+
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //Cart appBar
+            // Cart appBar
             Container(
-              // height: 203,
-              padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               color: Theme.of(context).cardColor.withOpacity(0.7),
-              // color: Colors.indigo,
               child: Row(
                 children: [
                   InkWell(
                     onTap: () {
-                      BackBtn.selectedIndexFn(0);
+                      backBtn.selectedIndexFn(0);
                     },
                     child: Icon(
                       Icons.arrow_back,
@@ -48,10 +44,11 @@ class _CartScreenState extends State<CartScreen> {
                     child: Text(
                       "Cart",
                       style: TextStyle(
-                          color: Theme.of(context).textTheme.titleLarge!.color,
-                          fontSize:
-                              Theme.of(context).textTheme.titleLarge!.fontSize,
-                          fontWeight: FontWeight.bold),
+                        color: Theme.of(context).textTheme.titleLarge!.color,
+                        fontSize:
+                            Theme.of(context).textTheme.titleLarge!.fontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   const Spacer(),
@@ -62,12 +59,13 @@ class _CartScreenState extends State<CartScreen> {
                 ],
               ),
             ),
-            //cart body
-            Obx(
-              () => Expanded(
-                child: ListView(children: [
+            // Cart body
+            Expanded(
+              child: ListView(
+                children: [
                   Container(
                     padding: const EdgeInsets.only(top: 7),
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color: Theme.of(context).cardTheme.color,
                       borderRadius: const BorderRadius.only(
@@ -75,46 +73,47 @@ class _CartScreenState extends State<CartScreen> {
                         topRight: Radius.circular(35),
                       ),
                     ),
-                    child: Column(children: [
-                      const CartItemWidget(),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 15),
-                        padding: const EdgeInsets.all(10),
-                        child: Row(children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color:
-                                  Theme.of(context).textTheme.titleLarge!.color,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Icon(Icons.add, color: Colors.white),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 10,
-                            ),
-                            child: Text(
-                              "Add Coupon Code",
-                              style: TextStyle(
-                                fontSize: 15,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge!
-                                    .color,
-                                fontWeight: FontWeight.bold,
+                    child: Column(
+                      children: [
+                        const CartItemWidget(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.blue, // Change to desired color
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child:
+                                    const Icon(Icons.add, color: Colors.white),
                               ),
-                            ),
-                          )
-                        ]),
-                      )
-                    ]),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: Text(
+                                  "Add Coupon Code",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color:
+                                        Colors.blue, // Change to desired color
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ]),
+                ],
               ),
             ),
             const CartBottomNavBar()
-          ]),
+          ],
+        ),
+      ),
     );
   }
 }

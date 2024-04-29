@@ -1,4 +1,3 @@
-
 class ProductResponse {
   final dynamic id;
   final String? title;
@@ -23,7 +22,7 @@ class ProductResponse {
       id: json["id"],
       title: json["title"] as String,
       description: json["description"] as String,
-      image: json["image"] ,
+      image: json["image"],
       price: json["price"],
       category: json["category"] as String,
       rating: Rating.fromJson(

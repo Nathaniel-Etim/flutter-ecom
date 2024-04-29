@@ -174,7 +174,8 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFF4C53A5)),
                         ),
                       ),
-                      productData.getIsLoading ? spinkit : const ItemWidget(),
+                      // productData.getIsLoading ? spinkit : const ItemWidget(),
+                      const ItemWidget(),
                     ],
                   ),
                 )
