@@ -1,12 +1,11 @@
 import 'package:ecom/GetxProvider/api_controller.dart';
 import 'package:ecom/GetxProvider/screen_provider.dart';
-import 'package:ecom/screens/cart_screen.dart';
-import 'package:ecom/widget/drawer.dart';
 import 'package:ecom/widget/item_widget.dart';
 import 'package:ecom/widget/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+
 import '../widget/Categories.dart';
 
 class HomePage extends StatefulWidget {

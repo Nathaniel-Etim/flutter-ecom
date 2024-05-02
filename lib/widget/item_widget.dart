@@ -6,7 +6,7 @@ import 'package:page_transition/page_transition.dart';
 import '../GetxProvider/api_controller.dart';
 
 class ItemWidget extends StatefulWidget {
-  const ItemWidget({Key? key}) : super(key: key);
+  const ItemWidget({super.key});
 
   @override
   State<ItemWidget> createState() => _ItemWidgetState();
